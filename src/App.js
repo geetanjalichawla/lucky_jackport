@@ -3,6 +3,7 @@ import React from "react";
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
 import LuckyJackpot from "./LuckyJackpot";
 import WinnersComponent from "./winnnerList";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 
 const theme = extendTheme({
@@ -39,8 +40,12 @@ function App() {
   return (
     <ChakraProvider theme={theme}>
       <CSSReset />
-      <LuckyJackpot />
-      <WinnersComponent/>
+      <BrowserRouter>
+      <Routes>
+        <Route path="/" element= {<LuckyJackpot />} />
+        <Route path="/winner-list" element= {<WinnersComponent/>} />
+      </Routes>
+      </BrowserRouter>
     </ChakraProvider>
   );
 }

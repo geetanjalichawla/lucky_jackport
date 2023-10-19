@@ -1,8 +1,67 @@
 // LuckyJackpot.js
-import React from "react";
-import { Box, Button, Heading, Container, HStack } from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Box, Button, Heading, Container, HStack, VStack } from "@chakra-ui/react";
+import io from "socket.io-client";
+import TodaysWinnersComponent from "./TodaysWinnersComponent";
+import { Link } from "react-router-dom";
 
 const LuckyJackpot = () => {
+
+  const [winners, setWinners] = useState([]);
+  const [selectedBetType, setSelectedBetType] = useState(1);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Set the initial date to the current date
+  const socket = io("http://127.0.0.1:8001/api/v1/user/get-all-winners");
+
+  useEffect(() => {
+    const fetchWinners = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:8001/api/v1/user/get-all-winners`
+        );
+        const data = await response.json();
+        setWinners(data.result);
+        socket.emit("get-all-winners", selectedBetType.toString());
+      } catch (error) {
+        console.error("Error fetching winners:", error);
+      }
+    };
+
+    // Initial data fetch
+    const onConnect = () => {
+      // Listen for new winners
+      console.log("user connected");
+      socket.on("got-new-winner", (newWinner) => {
+        console.log({ newWinner });
+        if (newWinner.betType === selectedBetType) {
+          setWinners((prevWinners) => [newWinner, ...prevWinners]);
+        }
+      });
+      fetchWinners();
+    };
+
+    const onDisconnect = () => {
+      setWinners([]);
+    };
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, []);
+
+  const winnersFilteredByDate = winners.filter(
+    (winner) =>
+      new Date(winner.createdAt).toDateString() === selectedDate.toDateString()
+  );
+
+  winnersFilteredByDate.sort(
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  );
+
+
   return (
     <Box
       bgImage="url('assets/bg_image.jpg')" // Update with your actual background image URL
@@ -14,31 +73,44 @@ const LuckyJackpot = () => {
       flexDirection="column"
       justifyContent="space-between"
     >
-      <Container padding="80px" textAlign="center" marginTop="auto">
-        <Heading fontSize="36px" fontWeight="bold" color="#fff" marginTop="20px">
+      <VStack w="full" padding="2px" textAlign="center" marginTop="auto">
+        <Heading fontSize="36px" p="3" fontWeight="bold" color="yellow.700" marginTop="20px" display={'block'}       backgroundColor="yellow.100"
+>
           Lucky Jackpot
         </Heading>
+
         <HStack m={2} className="download-button">
           <Button
             as="a"
             href="assets/punjab-super-apk.apk"
             download
-            backgroundColor="white"
-            color="#000"
+            backgroundColor="yellow.700"
+            color="yellow.100"
             padding="15px 30px"
             fontSize="20px"
             textDecoration="none"
             borderRadius="5px"
             margin="0 10px"
-            _hover={{ backgroundColor: "whitesmoke" }}
+            _hover={{ backgroundColor: "yellow.800" }}
           >
             Download APK
           </Button>
-          <Button backgroundColor="white" color="#000" padding="15px 30px" fontSize="20px" textDecoration="none" borderRadius="5px" margin="0 10px">
+          <Button             
+          backgroundColor="yellow.700"
+            color="yellow.100"
+            padding="15px 30px"
+             fontSize="20px" 
+             textDecoration="none"
+              borderRadius="5px" 
+              margin="0 10px"
+              _hover={{ backgroundColor: "yellow.800" }}
+
+              >
             Download exe
           </Button>
         </HStack>
-      </Container>
+        <TodaysWinnersComponent todayWinners={winners} />
+      </VStack>
     </Box>
   );
 };
