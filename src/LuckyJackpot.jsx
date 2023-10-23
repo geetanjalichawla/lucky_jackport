@@ -6,17 +6,18 @@ import TodaysWinnersComponent from "./TodaysWinnersComponent";
 import { Link } from "react-router-dom";
 
 const LuckyJackpot = () => {
+  const url = 'http://13.200.44.146/api/v1/user/';
 
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date()); // Set the initial date to the current date
-  const socket = io("http://127.0.0.1:8001/api/v1/user/get-all-winners");
+  const socket = io(`${url}/get-all-winners`);
 
   useEffect(() => {
     const fetchWinners = async () => {
       try {
         const response = await fetch(
-          `http://localhost:8001/api/v1/user/get-all-winners`
+          `${url}/get-all-winners`
         );
         const data = await response.json();
         setWinners(data.result);
