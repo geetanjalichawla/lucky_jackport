@@ -6,7 +6,7 @@ import TodaysWinnersComponent from "./TodaysWinnersComponent";
 import { Link } from "react-router-dom";
 
 const LuckyJackpot = () => {
-  const url = 'http://13.200.44.146/api/v1/user/';
+  const url = 'http://13.200.44.146/api/v1/user';
 
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);

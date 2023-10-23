@@ -16,15 +16,17 @@ import "react-datepicker/dist/react-datepicker.css";
 import WinnersList from "./WinnersList";
 
 const WinnersComponent = () => {
+  const url = 'http://13.200.44.146/api/v1/user';
+
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const socket = io("http://127.0.0.1:8001/api/v1/user/get-all-winners");
+  const socket = io(`${url}/get-all-winners`);
 
   useEffect(() => {
     const fetchWinners = async () => {
       try {
-        const response = await fetch("http://localhost:8001/api/v1/user/get-all-winners");
+        const response = await fetch(`${url}/get-all-winners`);
         const data = await response.json();
         setWinners(data.result);
         socket.emit("get-all-winners", selectedBetType.toString());
