@@ -1,6 +1,6 @@
 // LuckyJackpot.js
 import React, { useEffect, useState } from "react";
-import { Box, Button, Heading, Container, HStack, VStack } from "@chakra-ui/react";
+import { Box, Button, Heading, Container, HStack, VStack, Flex } from "@chakra-ui/react";
 import io from "socket.io-client";
 import TodaysWinnersComponent from "./TodaysWinnersComponent";
 import { Link } from "react-router-dom";
@@ -80,7 +80,7 @@ const LuckyJackpot = () => {
           Lucky Jackpot
         </Heading>
 
-        <HStack m={2} className="download-button">
+        <Flex flexDir={['column','row']} m={2} gap={2} className="download-button">
           <Button
             as="a"
             href="assets/punjab-super-apk.apk"
@@ -109,7 +109,7 @@ const LuckyJackpot = () => {
               >
             Download exe
           </Button>
-        </HStack>
+        </Flex>
         <TodaysWinnersComponent todayWinners={winners} />
       </VStack>
     </Box>

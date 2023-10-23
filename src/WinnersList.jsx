@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Table, Thead, Tbody, Tr, Th, Td, Text } from "@chakra-ui/react";
 
 const WinnersList = ({ winners, betType, selectedDate }) => (
-  <Box>
+  <Box maxWidth={'100%'} overflow={'auto'}>
     <Table variant="simple">
           <Thead>
             <Tr>

@@ -9,6 +9,7 @@ import {
   Tabs,
   Text,
   HStack,
+  Flex,
 } from "@chakra-ui/react";
 import io from "socket.io-client";
 import DatePicker from "react-datepicker";
@@ -58,8 +59,8 @@ const WinnersComponent = () => {
   }, [selectedBetType]);
 
   return (
-    <Box p={4} minHeight="100vh" display="flex" flexDir="column"       backgroundColor="yellow.100" color={'yellow.800'}>
-      <Tabs variant="solid-rounded" colorScheme="yellow">
+    <Box p={4} minHeight="100vh" display="flex" flexDir="column" overflow={'hidden'}       backgroundColor="yellow.100" color={'yellow.800'} w="100%" >
+      <Tabs variant="solid-rounded" colorScheme="yellow" w="full">
         <TabList
           gridGap={4}
         >
@@ -68,12 +69,12 @@ const WinnersComponent = () => {
         </TabList>
 
         <TabPanels>
-          <TabPanel>
-            <HStack gap="4">
+          <TabPanel w="full">
+          <Flex flexDir={['column', 'row']} gap="4">
               <Heading as="h1" size="xl" mb={4}>
                 Winners List
               </Heading>
-              <Box mb={4}>
+              <Box mb={4} >
                 <DatePicker
                   selected={selectedDate}
                   onChange={(date) => setSelectedDate(date)}
@@ -82,12 +83,12 @@ const WinnersComponent = () => {
                   maxDate={new Date()}
                 />
               </Box>
-            </HStack>
+            </Flex>
             <WinnersList winners={winners} betType={1} selectedDate={selectedDate} />
           </TabPanel>
 
-          <TabPanel>
-            <HStack gap="4">
+          <TabPanel w="full">
+            <Flex flexDir={['column', 'row']} gap="4">
               <Heading as="h1" size="xl" mb={4}>
                 Winners List
               </Heading>
@@ -100,7 +101,7 @@ const WinnersComponent = () => {
                   maxDate={new Date()}
                 />
               </Box>
-            </HStack>
+            </Flex>
             <WinnersList winners={winners} betType={0} selectedDate={selectedDate} />
           </TabPanel>
         </TabPanels>
