@@ -14,7 +14,7 @@ import {
 import io from "socket.io-client";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import WinnersList from "./WinnersList";
+import WinnersList from "../Components/WinnersList";
 
 const WinnersComponent = () => {
   const url = 'http://13.200.44.146/api/v1/user';

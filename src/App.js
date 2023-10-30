@@ -1,9 +1,11 @@
 // App.js
 import React from "react";
 import { ChakraProvider, CSSReset, extendTheme } from "@chakra-ui/react";
-import LuckyJackpot from "./LuckyJackpot";
-import WinnersComponent from "./winnnerList";
+import LuckyJackpot from "./Pages/LuckyJackpot";
+import WinnersComponent from "./Pages/winnnerList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { LoginPage } from "./Pages/AuthPage/Login";
+import { Dashboard } from "./Pages/Dashboard";
 
 
 const theme = extendTheme({
@@ -44,6 +46,8 @@ function App() {
       <Routes>
         <Route path="/" element= {<LuckyJackpot />} />
         <Route path="/winner-list" element= {<WinnersComponent/>} />
+        <Route path="/login" element= {<LoginPage/>} />
+        <Route path="/dashboard" element= {<Dashboard/>} />
       </Routes>
       </BrowserRouter>
     </ChakraProvider>
