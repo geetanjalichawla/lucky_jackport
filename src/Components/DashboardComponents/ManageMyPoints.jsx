@@ -72,11 +72,11 @@ const ManageMyPoints = () => {
 
 
      return (
-          <Box w='full' display='flex' flexDir='column' bgImage="url('assets/bg_image.jpg')" backgroundRepeat='no-repeat' backgroundSize={'cover'}>
+          <Box w='100%' display='flex' flexDir='column' bgImage="url('assets/bg_image.jpg')" backgroundRepeat='no-repeat' backgroundSize={'cover'}>
                <Box
                     fontSize={'150%'}
                     m={3}
-                    w={{ base: '100', md: '70%', lg: '50%' }}
+                    w={{ base: '100', md: '60%', lg: '50%' }}
                     p={3}
                     pl={5}
                     pr={5}
