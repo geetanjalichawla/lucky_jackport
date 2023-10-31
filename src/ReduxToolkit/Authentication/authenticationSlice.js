@@ -5,6 +5,7 @@ const initialState = {
     isAuthLoading: false,
     isAuthError: false,
     token: null,
+    coinBalance: 0,
 };
 
 const authenticationSlice = createSlice({
@@ -18,7 +19,8 @@ const authenticationSlice = createSlice({
             state.isAuthError = false;
         },
         loginSuccess(state, action) {
-            localStorage.setItem("live_token", action?.payload?.token);
+            localStorage.setItem("bet_token", action?.payload?.token);
+            state.coinBalance = action?.payload?.coinBalance || 0;
             state.isAuthLoading = false;
             state.isAuthError = false;
             state.token = action?.payload?.token;
@@ -27,6 +29,11 @@ const authenticationSlice = createSlice({
             console.log("login failure in reducer", action);
             state.isAuthLoading = false;
             state.isAuthError = true;
+            state.token = null;
+        },
+
+        logoutSuccess(state, action) {
+            localStorage.removeItem("bat_token");
             state.token = null;
         },
     },
@@ -38,6 +45,8 @@ export const {
     loginRequest,
     loginSuccess,
     loginFailure,
+
+    logoutSuccess,
 
 } = authenticationSlice.actions;
 

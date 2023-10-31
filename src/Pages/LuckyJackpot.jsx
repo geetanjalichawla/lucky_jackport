@@ -4,40 +4,39 @@ import {
   Box,
   Button,
   Heading,
-  Container,
-  HStack,
   VStack,
-  Flex,
   Table,
-  Thead,
   Tbody,
-  Tfoot,
   Tr,
-  Th,
-  Td,
   TableContainer,
+  Avatar,
 } from "@chakra-ui/react";
-import io from "socket.io-client";
-import TodaysWinnersComponent from "../Components/TodaysWinnersComponent";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import io from "socket.io-client";
+
+const api = process.env.REACT_APP_BASE_URL;
 
 const LuckyJackpot = () => {
-  const url = 'http://13.200.44.146/api/v1/user';
+
+  const token = useSelector((state) => state?.authenticationReducer?.token || localStorage.getItem("bet_token"));
+  const { coinBalance } = useSelector((state) => state?.authenticationReducer);
+  // const api = 'http://13.200.44.146/api/v1/user';
 
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
-  const [selectedDate, setSelectedDate] = useState(new Date()); // Set the initial date to the current date
-  const socket = io(`${url}/get-all-winners`);
+  const [selectedDate, setSelectedDate] = useState(new Date()); // Set Boxe initial date to Boxe current date
+  const socket = io(`${api}/get-all-winners`);
 
   useEffect(() => {
     const fetchWinners = async () => {
       try {
         const response = await fetch(
-          `${url}/get-all-winners`
+          `${api}/get-all-winners`
         );
         const data = await response.json();
         console.log({ data });
-        setWinners(data.result);
+        setWinners(data?.result || []);
         socket.emit("get-all-winners", selectedBetType.toString());
       }
       catch (error) {
@@ -80,10 +79,14 @@ const LuckyJackpot = () => {
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
+  console.log({ winners });
+  const numWinner = winners?.filter((el) => el.betType === 0);
+  const cardWinner = winners?.filter((el) => el.betType === 1);
+  console.log({ cardWinner });
 
   return (
     <Box
-      bgImage="url('assets/bg_image.jpg')" // Update with your actual background image URL
+      bgImage="url('assets/bg_image.jpg')" // Update wiBox your actual background image URL
       bgSize="cover"
       bgPosition="center"
       fontFamily="Arial, sans-serif"
@@ -92,42 +95,48 @@ const LuckyJackpot = () => {
       flexDirection="column"
       justifyContent="space-between"
     >
-      <VStack w="full" padding="2px" height='70vh' textAlign="center" marginTop="auto">
-        <Box padding={2} bg='white' w='85%'>
-          <TableContainer w='full'>
-            <Table variant='simple'>
-              <Tbody>
-                <Tr>
-                  <Th>11</Th>
-                  <Th>10</Th>
-                  <Th>0</Th>
-                  <Th>5</Th>
-                  <Th>3</Th>
-                  <Th>9</Th>
-                  <Th>12</Th>
-                  <Th>1</Th>
-                  <Th>2</Th>
-                  <Th>4</Th>
-                  <Th>7</Th>
-                  <Th>6</Th>
-                </Tr>
-                <Tr>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                  <Th>into</Th>
-                </Tr>
-              </Tbody>
-            </Table>
-          </TableContainer>
+      <Box>
+        {
+          token && <Link to='/dashboard'><Button
+            backgroundColor="yellow.500"
+            boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+            color="white"
+            _hover={{
+              bg: 'yellow.100',
+              color: 'black'
+            }}>Dashboard</Button></Link>
+        }
+      </Box>
+      <VStack w="full" padding="2px" height='100vh' textAlign="center" p="auto">
+        <Box padding={2} w='85%' m={'auto'} >
+          <Box display={'flex'} justifyContent='space-around' p={2} mb={5} flexWrap={'wrap'}>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[0]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[1]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[2]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[3]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[4]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[5]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[6]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[7]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[8]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[9]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[10]?.winningNumber}</Box>
+            <Box w='70px' h='70px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[11]?.winningNumber}</Box>
+          </Box>
+          <Box display={'flex'} justifyContent='space-around' p={2} flexWrap={'wrap'}>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[0]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[0]?.winningNumber}.png` : `Taash/${cardWinner[0]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[1]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[1]?.winningNumber}.png` : `Taash/${cardWinner[1]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[2]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[2]?.winningNumber}.png` : `Taash/${cardWinner[2]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[3]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[3]?.winningNumber}.png` : `Taash/${cardWinner[3]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[4]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[4]?.winningNumber}.png` : `Taash/${cardWinner[4]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[5]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[5]?.winningNumber}.png` : `Taash/${cardWinner[5]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[6]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[6]?.winningNumber}.png` : `Taash/${cardWinner[6]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[7]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[7]?.winningNumber}.png` : `Taash/${cardWinner[7]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[8]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[8]?.winningNumber}.png` : `Taash/${cardWinner[8]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[9]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[9]?.winningNumber}.png` : `Taash/${cardWinner[9]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[10]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[10]?.winningNumber}.png` : `Taash/${cardWinner[10]?.winningNumber}.png`} /></Box>
+            <Box bg='white' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[11]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[11]?.winningNumber}.png` : `Taash/${cardWinner[11]?.winningNumber}.png`} /></Box>
+          </Box>
         </Box>
         <Box
           w='full'
@@ -136,13 +145,35 @@ const LuckyJackpot = () => {
           justifyContent='center'
           alignItems='center'
           mb={5}>
-          <Heading w='fit-content' m='auto' fontSize="36px" p="3" fontWeight="bold" color="yellow.700" marginTop="20px" display={'block'} backgroundColor="yellow.100" mb={5}>
+          <Heading
+            w='fit-content'
+            m='auto'
+            fontSize={{ base: '200%', md: '300%' }}
+            p={3}
+            pl={5}
+            pr={5}
+            fontWeight="bold"
+            color="yellow.500"
+            marginTop="20px"
+            display={'block'}
+            borderRadius={'10px'}
+            mb={5}
+            boxShadow='0 0 70px rgba(255, 255, 0, 0.5)'
+            _hover={{ boxShadow: '0 0 60px rgba(255, 255, 0, 0.5)' }}
+          >
             Lucky Jackpot
           </Heading>
-          
-          {/* <TodaysWinnersComponent todayWinners={winners} /> */}
-          <Box w='90%' display='flex' justifyContent={'flex-end'} m={'auto'}>
-            <Link to='/login'><Button>Login</Button></Link>
+          <Box w='90%' display='flex' justifyContent={'center'} m={'auto'} mt={10}>
+            <Link to='/login'>
+              <Button
+                backgroundColor="yellow.500"
+                boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+                color="white"
+                _hover={{
+                  bg: 'yellow.100',
+                  color: 'black'
+                }}>Login</Button>
+            </Link>
           </Box>
         </Box>
       </VStack>

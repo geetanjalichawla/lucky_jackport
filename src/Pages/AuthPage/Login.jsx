@@ -21,7 +21,7 @@ const LoginPage = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
-    const token = localStorage.getItem("bat_token");
+    const token = localStorage.getItem("bet_token");
 
     const [formData, setFormData] = useState({
         userName: '',
@@ -50,6 +50,14 @@ const LoginPage = () => {
         };
     };
 
+    useEffect(() => {
+        if (!token) {
+            navigate('/login');
+        }
+        else {
+            navigate('/dashboard');
+        }
+    }, [token]);
 
     return (
         <Flex
@@ -60,14 +68,14 @@ const LoginPage = () => {
             bgPosition="center">
             {
                 <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
-                    <Stack align={'center'}>
-                        <Heading fontSize={'2xl'} fontWeight={'bold'} color='pink.500'>Login</Heading>
-                    </Stack>
                     <Box
                         rounded={'lg'}
                         bg='white'
                         boxShadow={'lg'}
                         p={8}>
+                        <Stack align={'center'} mb={5}>
+                            <Heading fontSize={'2xl'} fontWeight={'bold'} color='pink.500'>Login</Heading>
+                        </Stack>
                         <Stack spacing={4}>
                             <FormControl>
                                 <FormLabel>User Name</FormLabel>
@@ -91,10 +99,11 @@ const LoginPage = () => {
                             </FormControl>
                             <Stack spacing={10}>
                                 <Button
-                                    bg={'blue.400'}
-                                    color={'white'}
+                                    backgroundColor="yellow.700"
+                                    color="yellow.100"
                                     _hover={{
-                                        bg: 'blue.500',
+                                        bg: 'yellow.100',
+                                        color: 'black'
                                     }}
                                     onClick={() => handleSignIn()}
                                     isLoading={loading}>

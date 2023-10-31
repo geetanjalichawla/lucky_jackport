@@ -6,6 +6,8 @@ import WinnersComponent from "./Pages/winnnerList";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { LoginPage } from "./Pages/AuthPage/Login";
 import { Dashboard } from "./Pages/Dashboard";
+import PrivateRoute from "./PrivateRoute";
+import { ToastContainer } from "react-toastify";
 
 
 const theme = extendTheme({
@@ -43,12 +45,34 @@ function App() {
     <ChakraProvider theme={theme}>
       <CSSReset />
       <BrowserRouter>
-      <Routes>
-        <Route path="/" element= {<LuckyJackpot />} />
-        <Route path="/winner-list" element= {<WinnersComponent/>} />
-        <Route path="/login" element= {<LoginPage/>} />
-        <Route path="/dashboard" element= {<Dashboard/>} />
-      </Routes>
+        <Routes>
+          <Route path="/" element={<LuckyJackpot />} />
+          <Route
+            path="/winner-list"
+            element={
+              <PrivateRoute>
+                <WinnersComponent />
+              </PrivateRoute>} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <Dashboard />
+              </PrivateRoute>} />
+        </Routes>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </BrowserRouter>
     </ChakraProvider>
   );

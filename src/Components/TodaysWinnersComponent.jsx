@@ -15,14 +15,13 @@ import { Link } from "react-router-dom";
 const TodaysWinnersComponent = ({ todayWinners }) => {
   return (
     <Box
-      p={2} // Reduced padding
-      maxWidth="700px" // Adjusted width
       maxHeight="300px"
       borderWidth="1px"
       overflow="auto"
-      borderRadius="md"
+      borderRadius="15px"
       backgroundColor="yellow.100"
-      w="full"
+      p={4}
+      w="90%"
     >
       <Text fontSize="xs" fontWeight="bold" color="yellow.700" mb={2} >
         Today's Winners

@@ -38,7 +38,7 @@ const api = process.env.REACT_APP_BASE_URL;
 
 // Get All Users:-
 export const getAllUsersFunc = (navigate) => (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserRequest());
     axios.get(`${api}/get-all-users`, {
         headers: {
@@ -62,7 +62,7 @@ export const getAllUsersFunc = (navigate) => (dispatch) => {
 // Get All Users Followers:-
 export const getUsersFollowersFunc = (userId, navigate) => (dispatch) => {
     const params = { page: 1 };
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserFollowersRequest());
     axios.get(`${api}/get-users-followers/${userId}`, {
         params: params,
@@ -88,7 +88,7 @@ export const getUsersFollowersFunc = (userId, navigate) => (dispatch) => {
 // Get All Users Followings:-
 export const getUsersFollowingsFunc = (userId, navigate) => (dispatch) => {
     const params = { page: 1 };
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserFollowingsRequest());
     axios.get(`${api}/get-users-followings/${userId}`, {
         params: params,
@@ -112,7 +112,7 @@ export const getUsersFollowingsFunc = (userId, navigate) => (dispatch) => {
 
 // Get my friends:-
 export const getUsersFriendsFunc = (userId, params, navigate) => (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserFriendsRequest());
     axios.get(`${api}/get-user-friends/${userId}`, {
         params: params,
@@ -134,7 +134,7 @@ export const getUsersFriendsFunc = (userId, params, navigate) => (dispatch) => {
 
 
 export const getUserViewersFunc = (userId, params, navigate) => (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserViewersRequest());
     axios.get(`${api}/get-user-viewers/${userId}`, {
         params: params,
@@ -159,7 +159,7 @@ export const getUserViewersFunc = (userId, params, navigate) => (dispatch) => {
 
 // Profile Status Change Function:-
 export const changeProfileStatusFunc = (id, payload, navigate, setLoad) => async (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     axios.put(`${api}/change-my-profile-status/${id}`, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -196,7 +196,7 @@ export const changeProfileStatusFunc = (id, payload, navigate, setLoad) => async
 
 // Status Change Function:-
 export const changeStatusFunc = (userId, payload, navigate, setLoad) => async (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     axios.put(`${api}/ban-active-user/${userId}`, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -232,7 +232,7 @@ export const changeStatusFunc = (userId, payload, navigate, setLoad) => async (d
 
 // Role Change Function:-
 export const changeUserRoleFunc = (userId, payload, navigate) => async (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     axios.put(`${api}/change-user-role/${userId}`, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -266,7 +266,7 @@ export const changeUserRoleFunc = (userId, payload, navigate) => async (dispatch
 
 // update User Function:- 
 export const updateUserFunc = (userId, payload, navigate, resetFormData, setLoad) => async (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     axios.patch(`${api}/update-user/${userId}`, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
@@ -309,7 +309,7 @@ export const updateUserFunc = (userId, payload, navigate, resetFormData, setLoad
 
 // Get user By Id:-
 export const getUserByIdFunc = (id, navigate) => (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     if (id) {
         dispatch(getUserByIdRequest());
         axios.get(`${api}/get-user-by-id/${id}`, {
@@ -338,7 +338,7 @@ export const getUserByIdFunc = (id, navigate) => (dispatch) => {
 
 // get-my-user-rewards
 export const getUserRewardsFunc = (userId, params, navigate) => (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     dispatch(getUserRewardsRequest());
     axios.get(`${api}/get-user-rewards-by-user-id/${userId}`, {
         params: params,
@@ -362,7 +362,7 @@ export const getUserRewardsFunc = (userId, params, navigate) => (dispatch) => {
 
 
 export const deleteUserFunc = (id, navigate) => async (dispatch) => {
-    const token = localStorage.getItem("live_token");
+    const token = localStorage.getItem("bet_token");
     if (id) {
         axios.delete(`${api}/delete-user/${id}`, {
             headers: {
