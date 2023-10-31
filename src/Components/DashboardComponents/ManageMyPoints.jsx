@@ -1,8 +1,9 @@
-import { Box, Button, Flex, FormControl, FormLabel, Heading, Input, Stack } from "@chakra-ui/react";
+import { Box, Button, Checkbox, Flex, FormControl, FormLabel, Heading, Input, Stack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
 import TodaysWinnersComponent from "../TodaysWinnersComponent";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { pointTransferFunction } from "../../ReduxToolkit/UserManagement/usersActions";
 const api = process.env.REACT_APP_BASE_URL;
 
 
@@ -69,8 +70,25 @@ const ManageMyPoints = () => {
 
 
      return (
-          <Box w='full' display='flex' flexDir='column'>
-               <Box fontSize={'150%'} m={3} w='full' p={3} fontWeight={500} color={'yellow.700'} mt={10}>{`Welcome, Hey your current bonus is: ${coinBalance || 0}`}</Box>
+          <Box w='full' display='flex' flexDir='column' bgImage="url('assets/bg_image.jpg')" backgroundRepeat='no-repeat' backgroundSize={'cover'}>
+               <Box
+                    fontSize={'150%'}
+                    m={3}
+                    w='50%'
+                    p={3}
+                    pl={5}
+                    pr={5}
+                    fontWeight="bold"
+                    marginTop="20px"
+                    display={'block'}
+                    borderRadius={'10px'}
+                    mb={5}
+                    color='white'
+                    bg={'red.800'}
+                    boxShadow='0 0 70px rgba(255, 255, 0, 0.5)'
+                    _hover={{ boxShadow: '0 0 60px rgba(255, 255, 0, 0.5)' }}
+                    mt={10}
+               >{`Welcome, Hey your current bonus is: ${coinBalance || 0}`}</Box>
                <Box display='flex'>
                     <Box display='flex' flexDir={'column'} width={'50%'}>
                          <Flex flexDir={['column', 'row']} m='auto' gap={2} className="download-button" mt={3} mb={3} w='fit-content'>
@@ -121,10 +139,13 @@ export { ManageMyPoints };
 const TransferCoin = () => {
 
      const [loading, setLoading] = useState(false);
+     const dispatch = useDispatch();
 
      const [formData, setFormData] = useState({
           userName: '',
-          password: '',
+          amount: '',
+          isAgent: false,
+          pin: ""
      });
 
      const handleInputChange = (event) => {
@@ -138,13 +159,25 @@ const TransferCoin = () => {
      const resetFormData = () => {
           setFormData({
                userName: '',
-               password: '',
+               amount: '',
+               isAgent: false,
+               pin: ""
           });
      };
 
-     const handleSendCoins = () => {
+     const handleChecked = (value) => {
+          setFormData((prevData) => ({
+               ...prevData,
+               isAgent: !value,
+          }));
+     }
 
+     const handleSendCoins = () => {
+          console.log({ formData });
+          dispatch(pointTransferFunction(formData, setLoading, resetFormData));
      };
+
+     console.log({ formData });
 
      return (
           <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
@@ -156,12 +189,13 @@ const TransferCoin = () => {
                     <Heading mb={5} fontSize={'2xl'} fontWeight={'bold'} color='pink.500'>Point Transfer</Heading>
                     <Stack spacing={4}>
                          <FormControl display={'flex'}>
-                              <FormLabel w={'120px'}>To Acc No.</FormLabel>
+                              <FormLabel w={'120px'}>Username</FormLabel>
                               <Input
                                    type="text"
                                    value={formData?.userName}
                                    name='userName'
-                                   placeholder='Account no.'
+                                   placeholder='Username'
+                                   required
                                    onChange={handleInputChange}
                               />
                          </FormControl>
@@ -169,8 +203,9 @@ const TransferCoin = () => {
                               <FormLabel w={'120px'}>Your Pin</FormLabel>
                               <Input
                                    type="number"
-                                   value={formData?.password}
-                                   name='password'
+                                   value={formData?.pin}
+                                   name='pin'
+                                   required
                                    placeholder='Your pin'
                                    onChange={handleInputChange}
                               />
@@ -181,8 +216,16 @@ const TransferCoin = () => {
                                    type="number"
                                    value={formData?.amount}
                                    name='amount'
+                                   required
                                    placeholder='Amount'
                                    onChange={handleInputChange}
+                              />
+                         </FormControl>
+                         <FormControl display={'flex'}>
+                              <FormLabel w={'120px'}>Manager/Admin</FormLabel>
+                              <Checkbox
+                                   isChecked={formData?.isAgent}
+                                   onChange={() => handleChecked(formData?.isAgent)}
                               />
                          </FormControl>
                          <Stack spacing={10}>

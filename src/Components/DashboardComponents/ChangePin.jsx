@@ -14,7 +14,6 @@ import {
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { resetPinFunction } from '../../ReduxToolkit/Authentication/authenticationActions';
 
 
