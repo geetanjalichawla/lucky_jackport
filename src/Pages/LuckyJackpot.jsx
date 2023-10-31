@@ -136,7 +136,7 @@ const LuckyJackpot = () => {
           justifyContent='center'
           alignItems='center'
           mb={5}>
-          <Heading w='fit-content' m='auto' fontSize="36px" p="3" fontWeight="bold" color="yellow.700" marginTop="20px" display={'block'} backgroundColor="yellow.100">
+          <Heading w='fit-content' m='auto' fontSize="36px" p="3" fontWeight="bold" color="yellow.700" marginTop="20px" display={'block'} backgroundColor="yellow.100" mb={5}>
             Lucky Jackpot
           </Heading>
           
