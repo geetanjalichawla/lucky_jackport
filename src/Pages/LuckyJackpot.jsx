@@ -140,7 +140,7 @@ const LuckyJackpot = () => {
             Lucky Jackpot
           </Heading>
           
-          <TodaysWinnersComponent todayWinners={winners} />
+          {/* <TodaysWinnersComponent todayWinners={winners} /> */}
           <Box w='90%' display='flex' justifyContent={'flex-end'} m={'auto'}>
             <Link to='/login'><Button>Login</Button></Link>
           </Box>
