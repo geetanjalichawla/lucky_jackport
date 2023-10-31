@@ -10,6 +10,8 @@ const api = process.env.REACT_APP_BASE_URL;
 const ManageMyPoints = () => {
 
      const { coinBalance } = useSelector((state) => state?.authenticationReducer);
+     const { userProfile } = useSelector(state => state?.userReducer);
+     console.log({ userProfile });
      // const api = 'http://13.200.44.146/api/v1/user';
 
      const [winners, setWinners] = useState([]);
@@ -74,7 +76,7 @@ const ManageMyPoints = () => {
                <Box
                     fontSize={'150%'}
                     m={3}
-                    w='50%'
+                    w={{ base: '100', md: '70%', lg: '50%' }}
                     p={3}
                     pl={5}
                     pr={5}
@@ -88,9 +90,9 @@ const ManageMyPoints = () => {
                     boxShadow='0 0 70px rgba(255, 255, 0, 0.5)'
                     _hover={{ boxShadow: '0 0 60px rgba(255, 255, 0, 0.5)' }}
                     mt={10}
-               >{`Welcome, Hey your current bonus is: ${coinBalance || 0}`}</Box>
-               <Box display='flex'>
-                    <Box display='flex' flexDir={'column'} width={'50%'}>
+               >{`Welcome, Hey your current bonus is: ${userProfile?.coinBalance || coinBalance || 0}`}</Box>
+               <Box display='flex' flexDir={{ base: 'column', lg: 'row' }}>
+                    <Box display='flex' flexDir={'column'} width={{ base: '100%', lg: '50%' }}>
                          <Flex flexDir={['column', 'row']} m='auto' gap={2} className="download-button" mt={3} mb={3} w='fit-content'>
                               <Button
                                    as="a"
@@ -124,10 +126,12 @@ const ManageMyPoints = () => {
                               <TransferCoin />
                          </Box>
                     </Box>
-                    <Box w={'50%'}></Box>
+                    <Box width={{ base: '100%', lg: '50%' }}>
+                         <TodaysWinnersComponent todayWinners={winners} />
+                    </Box>
                </Box>
                <Box w='full' pb={12} display='flex' justifyContent='center' alignItems={'center'}>
-                    <TodaysWinnersComponent todayWinners={winners} />
+
                </Box>
           </Box>
      );
@@ -173,8 +177,12 @@ const TransferCoin = () => {
      }
 
      const handleSendCoins = () => {
-          console.log({ formData });
-          dispatch(pointTransferFunction(formData, setLoading, resetFormData));
+          const data = {
+               ...formData,
+               isAgent: !formData.isAgent,
+          }
+          console.log({ formData, data });
+          dispatch(pointTransferFunction(data, setLoading, resetFormData));
      };
 
      console.log({ formData });

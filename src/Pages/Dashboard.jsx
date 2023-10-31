@@ -1,11 +1,22 @@
-import { Box, Button, Text } from "@chakra-ui/react";
-import { useState } from "react";
+import {
+     Avatar,
+     Box,
+     Button,
+     Text,
+     Menu,
+     MenuButton,
+     MenuList,
+     MenuItem,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 import { ManageMyPoints } from "../Components/DashboardComponents/ManageMyPoints";
 import { ChangePassword } from "../Components/DashboardComponents/ChangePassword";
 import { ChangePin } from "../Components/DashboardComponents/ChangePin";
 import { useDispatch } from "react-redux";
 import { logOutFunction } from "../ReduxToolkit/Authentication/authenticationActions";
 import { Link, useNavigate } from "react-router-dom";
+import { getUserProfileFunc } from "../ReduxToolkit/UserManagement/usersActions";
+import { ChevronDownIcon } from "@chakra-ui/icons";
 
 const Dashboard = () => {
 
@@ -23,9 +34,13 @@ const Dashboard = () => {
           localStorage.removeItem('bet_token');
      };
 
+     useEffect(() => {
+          dispatch(getUserProfileFunc());
+     }, []);
+
      return (
-          <Box w='full' display='flex' flexDir='column'>
-               <Box display='flex' justifyContent='space-around' w='full' bg={'yellow.500'}>
+          <Box display='flex' flexDir='column'>
+               <Box w='full' display={{ base: 'none', md: 'flex' }} flexDir={{ base: 'column', md: 'row' }} justifyContent='space-around' bg={'yellow.500'}>
                     <Box w={{ base: '90%', sm: '23%' }} display='flex' justifyContent='center' alignItems='center' pt={3} pb={3} fontWeight={'bold'}>
                          <Text onClick={() => handleToggle('transferPoints')} color={value === 'transferPoints' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Manage My Point</Text>
                     </Box>
@@ -38,11 +53,22 @@ const Dashboard = () => {
                     <Box w={{ base: '90%', sm: '23%' }} display='flex' justifyContent='center' alignItems='center' pt={3} pb={3} fontWeight={'bold'}>
                          <Text onClick={() => handleLogout()} color={value === '' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Logout</Text>
                     </Box>
+                    <Box position={'absolute'} right={2}>
+                         <Menu>
+                              <MenuButton as={Box} rightIcon={<ChevronDownIcon />}>
+                                   <Avatar />
+                              </MenuButton>
+                              <MenuList>
+                                   {/* <MenuItem>Attend a Workshop</MenuItem> */}
+                              </MenuList>
+                         </Menu>
+                    </Box>
                </Box>
                <Link to='/'>
                     <Button
                          position={'absolute'}
                          top={12}
+                         display={{ base: 'none', md: 'flex' }}
                          left={1}
                          backgroundColor="yellow.700"
                          color="yellow.100"

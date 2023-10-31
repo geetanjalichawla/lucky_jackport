@@ -21,7 +21,7 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
       borderRadius="15px"
       backgroundColor="yellow.100"
       p={4}
-      w="90%"
+      w="100%"
     >
       <Text fontSize="xs" fontWeight="bold" color="yellow.700" mb={2} >
         Today's Winners
@@ -30,7 +30,7 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
         <Button colorScheme="yellow" float={'right'}>
           View All
         </Button>
-        </Link>
+      </Link>
       {todayWinners.length > 0 ? (
         <Table variant="simple">
           <Thead>
@@ -38,12 +38,12 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
               <Th fontSize="xs" color="yellow.700">
                 lucky no.
               </Th>
-              <Th fontSize="xs" color="yellow.700">
+              {/* <Th fontSize="xs" color="yellow.700">
                 winner Card
               </Th>
               <Th fontSize="xs" color="yellow.700">
                 Bet ID
-              </Th>
+              </Th> */}
               <Th fontSize="xs" color="yellow.700">
                 Bet Type
               </Th>
@@ -55,19 +55,19 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
           <Tbody>
             {todayWinners.map((winner) => (
               <Tr key={winner._id}>
-                <Td fontSize="xs" p={1}> {/* Reduced padding in cells */}
+                <Td fontSize="xs" p={1}>
                   <Text color="green.600">{winner.winningNumber}</Text>
                 </Td>
-                <Td fontSize="xs" p={1}> {/* Reduced padding in cells */}
+                {/* <Td fontSize="xs" p={1}>
                   {winner.winnerCard}
                 </Td>
-                <Td fontSize="xs" p={1}> {/* Reduced padding in cells */}
+                <Td fontSize="xs" p={1}>
                   {winner.betId}
+                </Td> */}
+                <Td fontSize="xs" p={1}>
+                  {winner.betType === 0 ? 'Lucky 100 ' : 'Lucky Patta'}
                 </Td>
-                <Td fontSize="xs" p={1}> {/* Reduced padding in cells */}
-                {winner.betType === 0 ? 'Lucky 100 ' : 'Lucky Patta'}
-                </Td>
-                <Td fontSize="xs" p={1}> {/* Reduced padding in cells */}
+                <Td fontSize="xs" p={1}>
                   {new Date(winner.createdAt).toLocaleString()}
                 </Td>
               </Tr>

@@ -10,12 +10,29 @@ import {
   Tr,
   TableContainer,
   Avatar,
+  Text,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import io from "socket.io-client";
 
 const api = process.env.REACT_APP_BASE_URL;
+
+function extractTimeFromDateString(dateString) {
+  const dateObject = new Date(dateString);
+  if (isNaN(dateObject)) {
+    return "Invalid Date";
+  }
+  const hours = dateObject.getUTCHours();
+  const minutes = dateObject.getUTCMinutes();
+  const seconds = dateObject.getUTCSeconds();
+  const amOrPm = hours >= 12 ? 'PM' : 'AM';
+  const formattedHours = hours % 12 || 12;
+  const formattedTime = `${formattedHours}:${minutes}:${seconds} ${amOrPm}`;
+  return formattedTime;
+};
+
+
 
 const LuckyJackpot = () => {
 
@@ -82,7 +99,6 @@ const LuckyJackpot = () => {
   console.log({ winners });
   const numWinner = winners?.filter((el) => el.betType === 0);
   const cardWinner = winners?.filter((el) => el.betType === 1);
-  console.log({ cardWinner });
 
   return (
     <Box
@@ -97,31 +113,69 @@ const LuckyJackpot = () => {
     >
       <Box>
         {
-          token && <Link to='/dashboard'><Button
-            backgroundColor="yellow.500"
-            boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
-            color="white"
-            _hover={{
-              bg: 'yellow.100',
-              color: 'black'
-            }}>Dashboard</Button></Link>
+          token && <Link to='/dashboard'>
+            <Button
+              backgroundColor="yellow.500"
+              boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+              color="white"
+              _hover={{
+                bg: 'yellow.100',
+                color: 'black'
+              }}>Dashboard</Button>
+          </Link>
         }
       </Box>
       <VStack w="full" padding="2px" height='100vh' textAlign="center" p="auto">
         <Box padding={2} w='85%' m={'auto'} >
           <Box display={'flex'} justifyContent='space-around' p={2} mb={5} flexWrap={'wrap'}>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[0]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[1]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[2]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[3]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[4]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[5]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[6]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[7]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[8]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[9]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[10]?.winningNumber}</Box>
-            <Box w='70px' h='70px' fontWeight={'bold'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>{numWinner[11]?.winningNumber}</Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[0]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[0]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[1]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[1]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[2]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[2]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[3]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[3]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[4]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[4]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[5]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[5]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[6]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[6]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[7]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[7]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[8]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[8]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[9]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[9]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text>{numWinner[10]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[10]?.createdAt)}</Text>
+            </Box>
+            <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
+              <Text> {numWinner[11]?.winningNumber}</Text>
+              <Text fontSize={'50%'}>{extractTimeFromDateString(numWinner[11]?.createdAt)}</Text>
+            </Box>
           </Box>
           <Box display={'flex'} justifyContent='space-around' p={2} flexWrap={'wrap'}>
             <Box bg='white' boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[0]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[0]?.winningNumber}.png` : `Taash/${cardWinner[0]?.winningNumber}.png`} /></Box>

@@ -21,7 +21,7 @@ export const getUserProfileFunc = () => (dispatch) => {
     })
         .then((response) => {
             console.log(response);
-            dispatch(getUserProfileSuccess(response?.data));
+            dispatch(getUserProfileSuccess(response?.data?.user));
         })
         .catch((e) => {
             console.log({ e });
@@ -33,7 +33,7 @@ export const getUserProfileFunc = () => (dispatch) => {
 export const pointTransferFunction = (payload, setLoading, resetFormData) => (dispatch) => {
     setLoading(true);
     const token = localStorage.getItem("bet_token");
-    axios.put(`${api}/coin-transfer-for-user`, payload, {
+    axios.post(`${api}/coin-transfer-for-user`, payload, {
         headers: {
             Authorization: `Bearer ${token}`,
         }

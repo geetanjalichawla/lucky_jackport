@@ -51,7 +51,7 @@ const LoginPage = () => {
     };
 
     useEffect(() => {
-        if (!token) {
+        if (!token || token === 'undefined') {
             navigate('/login');
         }
         else {

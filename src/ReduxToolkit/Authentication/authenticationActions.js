@@ -13,7 +13,7 @@ export const loginFunction = (payload, navigate, setLoading, resetFormData) => (
         .then((response) => {
             console.log({ response });
             dispatch(loginSuccess(response?.data));
-            if(response?.data){
+            if (response?.data) {
                 toast.success('Login Successful!', {
                     autoClose: 1500,
                     position: 'top-center',
