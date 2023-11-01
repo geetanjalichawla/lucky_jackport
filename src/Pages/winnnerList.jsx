@@ -14,6 +14,7 @@ import io from "socket.io-client";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import WinnersList from "../Components/WinnersList";
+
 const api = process.env.REACT_APP_BASE_URL;
 
 
@@ -24,7 +25,7 @@ const WinnersComponent = () => {
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const socket = io(`${api}/get-all-winners`);
+  const socket = io(`${process.env.REACT_APP_SOCKET_URL}/get-all-winners`);
 
   useEffect(() => {
     const fetchWinners = async () => {

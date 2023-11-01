@@ -42,7 +42,7 @@ const LuckyJackpot = () => {
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
   const [selectedDate, setSelectedDate] = useState(new Date()); // Set Boxe initial date to Boxe current date
-  const socket = io(`${api}/get-all-winners`);
+  const socket = io(`${process.env.REACT_APP_SOCKET_URL}/get-all-winners`);
 
   useEffect(() => {
     const fetchWinners = async () => {
@@ -67,9 +67,6 @@ const LuckyJackpot = () => {
       socket.on("got-new-winner", (newWinner) => {
         setWinners(newWinner);
         console.log({ newWinner });
-        // if (newWinner.betType === selectedBetType) {
-        //   setWinners((prevWinners) => [newWinner, ...prevWinners]);
-        // }
       });
       fetchWinners();
     };
@@ -135,6 +132,7 @@ const LuckyJackpot = () => {
             padding="30px"
             fontSize="30px"
             textDecoration="none"
+            as="a"
             borderRadius="5px"
             margin="0 10px"
             href="assets/punjab_super.exe"

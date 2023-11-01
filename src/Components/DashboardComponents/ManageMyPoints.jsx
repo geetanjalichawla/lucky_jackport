@@ -17,7 +17,7 @@ const ManageMyPoints = () => {
      const [winners, setWinners] = useState([]);
      const [selectedBetType, setSelectedBetType] = useState(1);
      const [selectedDate, setSelectedDate] = useState(new Date()); // Set the initial date to the current date
-     const socket = io(`${api}/get-all-winners`);
+     const socket = io(`${process.env.REACT_APP_SOCKET_URL}/get-all-winners`);
 
      useEffect(() => {
           const fetchWinners = async () => {
@@ -120,6 +120,7 @@ const ManageMyPoints = () => {
                                    margin="0 10px"
                                    href="assets/punjab_super.exe"
                                    download
+                                   as="a"
                                    _hover={{ backgroundColor: "yellow.800" }}
                               >
                                    Download exe
