@@ -40,10 +40,11 @@ const ManageMyPoints = () => {
                // Listen for new winners
                console.log("user connected");
                socket.on("got-new-winner", (newWinner) => {
-                    console.log({ newWinner });
-                    if (newWinner.betType === selectedBetType) {
-                         setWinners((prevWinners) => [newWinner, ...prevWinners]);
-                    }
+                    setWinners(newWinner);
+                    // console.log({ newWinner });
+                    // if (newWinner.betType === selectedBetType) {
+                    //      setWinners((prevWinners) => [newWinner, ...prevWinners]);
+                    // }
                });
                fetchWinners();
           };
@@ -130,7 +131,7 @@ const ManageMyPoints = () => {
                          <TodaysWinnersComponent todayWinners={winners} />
                     </Box>
                </Box>
-              
+
           </Box>
      );
 };

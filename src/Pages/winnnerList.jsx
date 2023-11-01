@@ -40,9 +40,10 @@ const WinnersComponent = () => {
 
     const onConnect = () => {
       socket.on("got-new-winner", (newWinner) => {
-        if (newWinner.betType === selectedBetType) {
-          setWinners((prevWinners) => [newWinner, ...prevWinners]);
-        }
+        setWinners(newWinner);
+        // if (newWinner.betType === selectedBetType) {
+        //   setWinners((prevWinners) => [newWinner, ...prevWinners]);
+        // }
       });
       fetchWinners();
     };
