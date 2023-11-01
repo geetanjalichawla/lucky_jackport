@@ -19,7 +19,7 @@ const authenticationSlice = createSlice({
             state.isAuthError = false;
         },
         loginSuccess(state, action) {
-            localStorage.setItem("bet_token", action?.payload?.token);
+            localStorage.setItem("bet_token", action?.payload?.token || action?.payload?.agent?.token);
             state.coinBalance = action?.payload?.coinBalance || 0;
             state.isAuthLoading = false;
             state.isAuthError = false;

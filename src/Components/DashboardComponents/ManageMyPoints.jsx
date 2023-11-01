@@ -61,7 +61,7 @@ const ManageMyPoints = () => {
           };
      }, []);
 
-     const winnersFilteredByDate = winners.filter(
+     const winnersFilteredByDate = winners?.filter(
           (winner) =>
                new Date(winner.createdAt).toDateString() === selectedDate.toDateString()
      );
@@ -72,7 +72,7 @@ const ManageMyPoints = () => {
 
 
      return (
-          <Box w='100%' display='flex' flexDir='column' bgImage="url('assets/bg_image.jpg')" backgroundRepeat='no-repeat' backgroundSize={'cover'}>
+          <Box w='100%' minH='100vh' display='flex' flexDir='column' bgImage="url('assets/bg_image.jpg')" backgroundRepeat='no-repeat' backgroundSize={'cover'}>
                <Box
                     fontSize={'150%'}
                     m={3}
@@ -126,13 +126,11 @@ const ManageMyPoints = () => {
                               <TransferCoin />
                          </Box>
                     </Box>
-                    <Box width={{ base: '100%', lg: '50%' }}>
+                    <Box width={{ base: '100%', lg: '50%' }} p={3}>
                          <TodaysWinnersComponent todayWinners={winners} />
                     </Box>
                </Box>
-               <Box w='full' pb={12} display='flex' justifyContent='center' alignItems={'center'}>
-
-               </Box>
+              
           </Box>
      );
 };

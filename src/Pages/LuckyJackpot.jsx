@@ -11,6 +11,7 @@ import {
   TableContainer,
   Avatar,
   Text,
+  Image,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -21,7 +22,7 @@ const api = process.env.REACT_APP_BASE_URL;
 function extractTimeFromDateString(dateString) {
   const dateObject = new Date(dateString);
   if (isNaN(dateObject)) {
-    return "Invalid Date";
+    return "";
   }
   const hours = dateObject.getUTCHours();
   const minutes = dateObject.getUTCMinutes();
@@ -33,12 +34,9 @@ function extractTimeFromDateString(dateString) {
 };
 
 
-
 const LuckyJackpot = () => {
 
-  const token = useSelector((state) => state?.authenticationReducer?.token || localStorage.getItem("bet_token"));
-  const { coinBalance } = useSelector((state) => state?.authenticationReducer);
-  // const api = 'http://13.200.44.146/api/v1/user';
+  const token = localStorage.getItem("bet_token");
 
   const [winners, setWinners] = useState([]);
   const [selectedBetType, setSelectedBetType] = useState(1);
@@ -106,26 +104,13 @@ const LuckyJackpot = () => {
       bgSize="cover"
       bgPosition="center"
       fontFamily="Arial, sans-serif"
-      height="100vh"
+      minH="100vh"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
+      alignItems={'center'}
     >
-      <Box>
-        {
-          token && <Link to='/dashboard'>
-            <Button
-              backgroundColor="yellow.500"
-              boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
-              color="white"
-              _hover={{
-                bg: 'yellow.100',
-                color: 'black'
-              }}>Dashboard</Button>
-          </Link>
-        }
-      </Box>
-      <VStack w="full" padding="2px" height='100vh' textAlign="center" p="auto">
+      <VStack w="full" height='auto' textAlign="center" p="auto" m={'auto'}>
         <Box padding={2} w='85%' m={'auto'} >
           <Box display={'flex'} justifyContent='space-around' p={2} mb={5} flexWrap={'wrap'}>
             <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
@@ -191,6 +176,36 @@ const LuckyJackpot = () => {
             <Box bg='white' boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[10]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[10]?.winningNumber}.png` : `Taash/${cardWinner[10]?.winningNumber}.png`} /></Box>
             <Box bg='white' boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' borderRadius='5px'><Avatar w='70px' h='100px' borderRadius={0} src={cardWinner[11]?.winningNumber?.length === 1 ? `Taash/0${cardWinner[11]?.winningNumber}.png` : `Taash/${cardWinner[11]?.winningNumber}.png`} /></Box>
           </Box>
+          <Box height={'full'} display={'flex'} justifyContent={'center'}>
+            <Image w={'300px'} height={'300px'} src='assets/Lucky_Jackpot11_page-000111.png' />
+          </Box>
+          <Box w='90%' display='flex' justifyContent={'center'} m={'auto'}>
+            {
+              token && token !== 'undefined' ? (
+                <Link to='/dashboard'>
+                  <Button
+                    backgroundColor="yellow.500"
+                    boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+                    color="white"
+                    _hover={{
+                      bg: 'yellow.100',
+                      color: 'black'
+                    }}>Dashboard</Button>
+                </Link>
+              ) : (
+                <Link to='/login'>
+                  <Button
+                    backgroundColor="yellow.500"
+                    boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
+                    color="white"
+                    _hover={{
+                      bg: 'yellow.100',
+                      color: 'black'
+                    }}>Login</Button>
+                </Link>
+              )
+            }
+          </Box>
         </Box>
         <Box
           w='full'
@@ -199,7 +214,7 @@ const LuckyJackpot = () => {
           justifyContent='center'
           alignItems='center'
           mb={5}>
-          <Heading
+          {/* <Heading
             w='fit-content'
             m='auto'
             fontSize={{ base: '200%', md: '300%' }}
@@ -216,19 +231,8 @@ const LuckyJackpot = () => {
             _hover={{ boxShadow: '0 0 60px rgba(255, 255, 0, 0.5)' }}
           >
             Lucky Jackpot
-          </Heading>
-          <Box w='90%' display='flex' justifyContent={'center'} m={'auto'} mt={10}>
-            <Link to='/login'>
-              <Button
-                backgroundColor="yellow.500"
-                boxShadow='rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px'
-                color="white"
-                _hover={{
-                  bg: 'yellow.100',
-                  color: 'black'
-                }}>Login</Button>
-            </Link>
-          </Box>
+          </Heading> */}
+
         </Box>
       </VStack>
     </Box>

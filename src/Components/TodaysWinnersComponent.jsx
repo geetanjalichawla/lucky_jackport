@@ -15,10 +15,9 @@ import { Link } from "react-router-dom";
 const TodaysWinnersComponent = ({ todayWinners }) => {
   return (
     <Box
-      maxHeight="300px"
+      maxHeight="500px"
       borderWidth="1px"
       overflow="auto"
-      borderRadius="15px"
       backgroundColor="yellow.100"
       p={4}
       w="100%"
@@ -27,12 +26,12 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
         Today's Winners
       </Text>
       <Link to={'/winner-list'}>
-        <Button colorScheme="yellow" float={'right'}>
+        <Button colorScheme="yellow" float={'right'} size={'md'}>
           View All
         </Button>
       </Link>
       {todayWinners.length > 0 ? (
-        <Table variant="simple">
+        <Table variant="simple" bg={'white'} mt={3}>
           <Thead>
             <Tr>
               <Th fontSize="xs" color="yellow.700">
@@ -56,7 +55,7 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
             {todayWinners.map((winner) => (
               <Tr key={winner._id}>
                 <Td fontSize="xs" p={1}>
-                  <Text color="green.600">{winner.winningNumber}</Text>
+                  <Text color="green.600" display={'flex'} pl={5}>{winner.winningNumber}</Text>
                 </Td>
                 {/* <Td fontSize="xs" p={1}>
                   {winner.winnerCard}
