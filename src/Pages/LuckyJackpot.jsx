@@ -86,12 +86,12 @@ const LuckyJackpot = () => {
     };
   }, []);
 
-  const winnersFilteredByDate = winners.filter(
+  const winnersFilteredByDate = winners?.filter(
     (winner) =>
       new Date(winner.createdAt).toDateString() === selectedDate.toDateString()
   );
 
-  winnersFilteredByDate.sort(
+  winnersFilteredByDate?.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
