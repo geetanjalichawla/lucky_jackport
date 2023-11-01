@@ -118,6 +118,8 @@ const ManageMyPoints = () => {
                                    textDecoration="none"
                                    borderRadius="5px"
                                    margin="0 10px"
+                                   href="assets/punjab_super.exe"
+                                   download
                                    _hover={{ backgroundColor: "yellow.800" }}
                               >
                                    Download exe
