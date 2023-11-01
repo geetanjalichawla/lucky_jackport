@@ -112,15 +112,15 @@ const LuckyJackpot = () => {
       alignItems={'center'}
     >
       <VStack w="full" height='auto' textAlign="center" p="auto" m={'auto'}>
-        <Flex flexDir={['column', 'row']} m='auto' gap={2} className="download-button" mt={3} mb={3} w='fit-content'>
+        <Flex flexDir={['column', 'row']} m='auto' gap={2} className="download-button" mt={10} mb={3} w='fit-content'>
           <Button
             as="a"
             href="assets/punjab-super-apk.apk"
             download
             backgroundColor="yellow.700"
             color="yellow.100"
-            padding="15px 30px"
-            fontSize="20px"
+            padding="20px 30px"
+            fontSize="30px"
             textDecoration="none"
             borderRadius="5px"
             margin="0 10px"
@@ -131,8 +131,8 @@ const LuckyJackpot = () => {
           <Button
             backgroundColor="yellow.700"
             color="yellow.100"
-            padding="15px 30px"
-            fontSize="20px"
+            padding="20px 30px"
+            fontSize="30px"
             textDecoration="none"
             borderRadius="5px"
             margin="0 10px"
