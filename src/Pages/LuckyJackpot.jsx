@@ -12,6 +12,7 @@ import {
   Avatar,
   Text,
   Image,
+  Flex,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -111,6 +112,35 @@ const LuckyJackpot = () => {
       alignItems={'center'}
     >
       <VStack w="full" height='auto' textAlign="center" p="auto" m={'auto'}>
+        <Flex flexDir={['column', 'row']} m='auto' gap={2} className="download-button" mt={3} mb={3} w='fit-content'>
+          <Button
+            as="a"
+            href="assets/punjab-super-apk.apk"
+            download
+            backgroundColor="yellow.700"
+            color="yellow.100"
+            padding="15px 30px"
+            fontSize="20px"
+            textDecoration="none"
+            borderRadius="5px"
+            margin="0 10px"
+            _hover={{ backgroundColor: "yellow.800" }}
+          >
+            Download APK
+          </Button>
+          <Button
+            backgroundColor="yellow.700"
+            color="yellow.100"
+            padding="15px 30px"
+            fontSize="20px"
+            textDecoration="none"
+            borderRadius="5px"
+            margin="0 10px"
+            _hover={{ backgroundColor: "yellow.800" }}
+          >
+            Download exe
+          </Button>
+        </Flex>
         <Box padding={2} w='85%' m={'auto'} >
           <Box display={'flex'} justifyContent='space-around' p={2} mb={5} flexWrap={'wrap'}>
             <Box w='70px' h='70px' flexDir={'column'} boxShadow='rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px' border='1px solid gray' bg='white' borderRadius={'5px'} display={'flex'} justifyContent={'center'} alignItems='center'>
