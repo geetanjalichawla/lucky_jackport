@@ -65,10 +65,11 @@ const LuckyJackpot = () => {
       // Listen for new winners
       console.log("user connected");
       socket.on("got-new-winner", (newWinner) => {
+        setWinners(newWinner);
         console.log({ newWinner });
-        if (newWinner.betType === selectedBetType) {
-          setWinners((prevWinners) => [newWinner, ...prevWinners]);
-        }
+        // if (newWinner.betType === selectedBetType) {
+        //   setWinners((prevWinners) => [newWinner, ...prevWinners]);
+        // }
       });
       fetchWinners();
     };
@@ -119,7 +120,7 @@ const LuckyJackpot = () => {
             download
             backgroundColor="yellow.700"
             color="yellow.100"
-            padding="20px 30px"
+            padding="30px"
             fontSize="30px"
             textDecoration="none"
             borderRadius="5px"
@@ -131,7 +132,7 @@ const LuckyJackpot = () => {
           <Button
             backgroundColor="yellow.700"
             color="yellow.100"
-            padding="20px 30px"
+            padding="30px"
             fontSize="30px"
             textDecoration="none"
             borderRadius="5px"
@@ -244,25 +245,6 @@ const LuckyJackpot = () => {
           justifyContent='center'
           alignItems='center'
           mb={5}>
-          {/* <Heading
-            w='fit-content'
-            m='auto'
-            fontSize={{ base: '200%', md: '300%' }}
-            p={3}
-            pl={5}
-            pr={5}
-            fontWeight="bold"
-            color="yellow.500"
-            marginTop="20px"
-            display={'block'}
-            borderRadius={'10px'}
-            mb={5}
-            boxShadow='0 0 70px rgba(255, 255, 0, 0.5)'
-            _hover={{ boxShadow: '0 0 60px rgba(255, 255, 0, 0.5)' }}
-          >
-            Lucky Jackpot
-          </Heading> */}
-
         </Box>
       </VStack>
     </Box>
