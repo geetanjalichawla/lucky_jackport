@@ -40,13 +40,9 @@ export const pointTransferFunction = (payload, setLoading, resetFormData) => (di
     })
         .then((response) => {
             console.log({ response });
-            toast.success(response?.data?.message, {
+            toast.success('Coin transfer', {
                 autoClose: 1500,
                 position: 'top-center',
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: false,
             });
             resetFormData();
             setLoading(false);

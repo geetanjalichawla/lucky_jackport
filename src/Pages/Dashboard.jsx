@@ -17,6 +17,7 @@ import { logOutFunction } from "../ReduxToolkit/Authentication/authenticationAct
 import { Link, useNavigate } from "react-router-dom";
 import { getUserProfileFunc } from "../ReduxToolkit/UserManagement/usersActions";
 import { ChevronDownIcon, HamburgerIcon } from "@chakra-ui/icons";
+import CoinTransferPage from "../Components/DashboardComponents/CoinManagerManagement";
 
 const Dashboard = () => {
 
@@ -43,6 +44,7 @@ const Dashboard = () => {
                <Box display={'flex'} justifyContent={'space-between'} w='full' bg={'yellow.200'}>
                     <Box w={'90%'} display={{ base: 'none', md: 'flex' }} justifyContent={'space-around'} alignItems={'center'}>
                          <Text fontWeight={'bold'} mt={5} mb={5} onClick={() => handleToggle('transferPoints')} color={value === 'transferPoints' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Manage My Point</Text>
+                         <Text fontWeight={'bold'} mt={5} mb={5} onClick={() => handleToggle('Transferable')} color={value === 'Transferable' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Transferable and Receivable</Text>
                          <Text fontWeight={'bold'} mt={5} mb={5} onClick={() => handleToggle('changePass')} color={value === 'changePass' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Change Password</Text>
                          <Text fontWeight={'bold'} mt={5} mb={5} onClick={() => handleToggle('changePin')} color={value === 'changePin' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Change Pin</Text>
                          <Text fontWeight={'bold'} mt={5} mb={5} onClick={() => handleLogout()} color={value === '' ? 'blue' : 'gray.600'} cursor={'pointer'} _hover={{ color: 'blue' }} w='fit-content'>Logout</Text>
@@ -77,6 +79,7 @@ const Dashboard = () => {
                               </MenuButton>
                               <MenuList>
                                    <MenuItem onClick={() => handleToggle('transferPoints')}>Manage My Point</MenuItem>
+                                   <MenuItem onClick={() => handleToggle('Transferable')}>Transferable and Receivable</MenuItem>
                                    <MenuItem onClick={() => handleToggle('changePass')}>Change Password</MenuItem>
                                    <MenuItem onClick={() => handleToggle('changePin')}>Change Pin</MenuItem>
                               </MenuList>
@@ -96,6 +99,9 @@ const Dashboard = () => {
 
                {
                     value === 'transferPoints' && <ManageMyPoints />
+               }
+               {
+                    value === 'Transferable' && <CoinTransferPage />
                }
                {
                     value === 'changePass' && <ChangePassword />
