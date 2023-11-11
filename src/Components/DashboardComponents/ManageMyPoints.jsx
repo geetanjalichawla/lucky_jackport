@@ -70,6 +70,15 @@ const ManageMyPoints = () => {
      winnersFilteredByDate.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
      );
+     const currentDate = new Date();
+currentDate.setHours(0, 0, 0, 0); // Set time components to zero
+
+// Filter winners for the current date
+const currentWinners = winners.filter(winner => {
+  const winnerDate = new Date(winner.createdAt);
+  winnerDate.setHours(0, 0, 0, 0); // Set time components to zero
+  return winnerDate.getTime() === currentDate.getTime();
+});
 
 
      return (
@@ -131,7 +140,7 @@ const ManageMyPoints = () => {
                          </Box>
                     </Box>
                     <Box width={{ base: '100%', lg: '50%' }} p={3}>
-                         <TodaysWinnersComponent todayWinners={winners} />
+                         <TodaysWinnersComponent todayWinners={currentWinners} />
                     </Box>
                </Box>
 

@@ -9,6 +9,7 @@ import {
   Th,
   Td,
   Button,
+  Avatar,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 
@@ -37,12 +38,6 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
               <Th fontSize="xs" color="yellow.700">
                 lucky no.
               </Th>
-              {/* <Th fontSize="xs" color="yellow.700">
-                winner Card
-              </Th>
-              <Th fontSize="xs" color="yellow.700">
-                Bet ID
-              </Th> */}
               <Th fontSize="xs" color="yellow.700">
                 Bet Type
               </Th>
@@ -54,15 +49,20 @@ const TodaysWinnersComponent = ({ todayWinners }) => {
           <Tbody>
             {todayWinners.map((winner) => (
               <Tr key={winner._id}>
-                <Td fontSize="xs" p={1}>
-                  <Text color="green.600" display={'flex'} pl={5}>{winner.winningNumber}</Text>
-                </Td>
-                {/* <Td fontSize="xs" p={1}>
-                  {winner.winnerCard}
-                </Td>
-                <Td fontSize="xs" p={1}>
-                  {winner.betId}
-                </Td> */}
+              <Td>{ winner.betType === 1 ? 
+              <Box bg='white'>
+                <Avatar 
+                  h='100px'
+                  w='70px'
+                  borderRadius={0}
+                  src={winner?.winningNumber?.length === 1 ?
+                   `Taash/0${winner?.winningNumber}.png` :
+                    `Taash/${winner?.winningNumber}.png`} />
+                </Box>
+              : winner?.winningNumber}
+              
+              </Td>
+ 
                 <Td fontSize="xs" p={1}>
                   {winner.betType === 0 ? 'Lucky 100 ' : 'Lucky Patta'}
                 </Td>

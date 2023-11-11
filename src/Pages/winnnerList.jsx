@@ -42,9 +42,6 @@ const WinnersComponent = () => {
     const onConnect = () => {
       socket.on("got-new-winner", (newWinner) => {
         setWinners(newWinner);
-        // if (newWinner.betType === selectedBetType) {
-        //   setWinners((prevWinners) => [newWinner, ...prevWinners]);
-        // }
       });
       fetchWinners();
     };
@@ -69,8 +66,8 @@ const WinnersComponent = () => {
       </Box>
       <Tabs variant="solid-rounded" colorScheme="yellow" w="full">
         <TabList gridGap={4} >
-          <Tab borderColor={'yellow.700'} borderWidth={'1'} onClick={() => setSelectedBetType(1)}>Bet Type 1</Tab>
-          <Tab borderColor={'yellow.700'} borderWidth={'1'} onClick={() => setSelectedBetType(0)}>Bet Type 0</Tab>
+          <Tab borderColor={'yellow.700'} borderWidth={'1'} onClick={() => setSelectedBetType(1)}>Lucky Patta</Tab>
+          <Tab borderColor={'yellow.700'} borderWidth={'1'} onClick={() => setSelectedBetType(0)}>Lucky 100</Tab>
         </TabList>
         <TabPanels bg='white' mt={3} boxShadow="rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px">
           <TabPanel w="full">
@@ -88,7 +85,7 @@ const WinnersComponent = () => {
                 />
               </Box>
             </Flex>
-            <WinnersList winners={winners} betType={1} selectedDate={selectedDate} />
+            <WinnersList winners={winners.filter(winner=>winner.betType === 1)} betType={1} selectedDate={selectedDate} />
           </TabPanel>
           <TabPanel w="full">
             <Flex flexDir={['column', 'row']} gap="4">
@@ -104,7 +101,7 @@ const WinnersComponent = () => {
                   maxDate={new Date()} />
               </Box>
             </Flex>
-            <WinnersList winners={winners} betType={0} selectedDate={selectedDate} />
+            <WinnersList winners={winners.filter(winner=>winner.betType === 0)} betType={0} selectedDate={selectedDate} />
           </TabPanel>
         </TabPanels>
       </Tabs>
